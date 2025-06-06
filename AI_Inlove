@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Romance Dialogue Game</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #ffe6f0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+    #game {
+      background: white;
+      border: 2px solid #ff6699;
+      border-radius: 10px;
+      padding: 20px;
+      width: 600px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.2);
+    }
+    #dialogue {
+      margin-bottom: 20px;
+      min-height: 100px;
+    }
+    .btn {
+      background-color: #ff6699;
+      border: none;
+      color: white;
+      padding: 10px 20px;
+      margin: 5px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+    .btn:hover {
+      background-color: #e05588;
+    }
+  </style>
+</head>
+<body>
+  <div id="game">
+    <div id="dialogue">Welcome to your first day at the new town. You bump into someone special...</div>
+    <div id="choices"></div>
+  </div>
+
+  <script>
+    const dialogueBox = document.getElementById("dialogue");
+    const choicesBox = document.getElementById("choices");
+
+    const scenes = [
+      {
+        text: "You meet Alex, a charming bookstore owner. They smile at you warmly. \"New in town?\"",
+        choices: ["Smile and say yes", "Nod shyly"]
+      },
+      {
+        text: "Alex offers to show you around the bookstore. You both laugh over your favorite authors.",
+        choices: ["Ask for a coffee sometime", "Thank them and walk away"]
+      },
+      {
+        text: "You and Alex go for coffee. The conversation flows like you've known each other for years.",
+        choices: ["Compliment Alex", "Talk about your past"]
+      },
+      {
+        text: "The sun sets. Alex holds your hand. \"I'd like to see you again,\" they say softly.",
+        choices: ["Say you feel the same", "Stay silent, but smile"]
+      },
+      {
+        text: "Weeks pass, and your bond deepens. On a quiet evening, under the stars, Alex kisses you. ❤️",
+        choices: []
+      }
+    ];
+
+    let currentScene = 0;
+
+    function showScene(index) {
+      dialogueBox.innerText = scenes[index].text;
+      choicesBox.innerHTML = "";
+
+      const choices = scenes[index].choices;
+      if (choices.length === 0) {
+        const endMsg = document.createElement("div");
+        endMsg.innerHTML = "<strong>The End.</strong>";
+        choicesBox.appendChild(endMsg);
+        return;
+      }
+
+      choices.forEach(choice => {
+        const btn = document.createElement("button");
+        btn.className = "btn";
+        btn.innerText = choice;
+        btn.onclick = () => {
+          currentScene++;
+          showScene(currentScene);
+        };
+        choicesBox.appendChild(btn);
+      });
+    }
+
+    showScene(currentScene);
+  </script>
+</body>
+</html>
